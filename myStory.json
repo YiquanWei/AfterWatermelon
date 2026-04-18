@@ -1,0 +1,114 @@
+{
+  "Title": "Where the Seeds Drift",
+  "Credits": "Customized by Yiquan Wei.",
+  "InitialLocation": "Bedroom in the Afternoon",
+  "Locations": {
+    "Bedroom in the Afternoon": {
+      "Body": "You ate too much watermelon in the afternoon and fell asleep before the sweetness fully left your mouth.",
+      "Choices": [
+        {
+          "Text": "Close your eyes",
+          "Target": "On the White Loong"
+        }
+      ]
+    },
+
+    "On the White Loong": {
+      "SceneType": "LoongLocation",
+      "Mechanism": "LoongFlight",
+      "Body": "You are holding onto a white loong as it glides through the air with impossible smoothness. Below you, lakes lie scattered across mountains, plains, reeds, and falling water.",
+      "Choices": [
+        {
+          "Text": "Descend toward the mountain lake",
+          "Target": "Mountain Lake"
+        },
+        {
+          "Text": "Descend toward the waterfall lake",
+          "Target": "Waterfall Lake"
+        },
+        {
+          "Text": "Descend toward the plain lake",
+          "Target": "Plain Lake"
+        },
+        {
+          "Text": "Descend toward the reed lake",
+          "Target": "Reed Lake"
+        },
+        {
+          "Text": "Return to the loong's back and let it surge toward the sky",
+          "Target": "Skyward Rush",
+          "Requires": ["large", "thin", "round", "tiny"]
+        }
+      ]
+    },
+
+    "Mountain Lake": {
+      "Body": "Far below the mountain, a dark lake rests in a bowl of stone. A large watermelon seed drifts on the surface like a tiny boat.",
+      "SeedType": "large",
+      "Choices": [
+        {
+          "Text": "Return to the white loong",
+          "Target": "On the White Loong"
+        }
+      ]
+    },
+
+    "Waterfall Lake": {
+      "Body": "Mist gathers where the waterfall strikes the lake. A thin watermelon seed spins in a slow circle near the foam.",
+      "SeedType": "thin",
+      "Choices": [
+        {
+          "Text": "Return to the white loong",
+          "Target": "On the White Loong"
+        }
+      ]
+    },
+
+    "Plain Lake": {
+      "Body": "This lake lies in the open plain, wide and quiet under pale light. A round watermelon seed floats in the middle of a still reflection.",
+      "SeedType": "round",
+      "Choices": [
+        {
+          "Text": "Return to the white loong",
+          "Target": "On the White Loong"
+        }
+      ]
+    },
+
+    "Reed Lake": {
+      "Body": "Among the reeds, the lake looks almost hidden. A tiny watermelon seed catches in the shadows between two stalks.",
+      "SeedType": "tiny",
+      "Choices": [
+        {
+          "Text": "Return to the white loong",
+          "Target": "On the White Loong"
+        }
+      ]
+    },
+
+    "Skyward Rush": {
+      "Body": "Once you return with every kind of seed, the white loong dives into the water and bursts upward in a single impossible motion. The world falls away. You lose your grip. You are falling too.",
+      "Choices": [
+        {
+          "Text": "Wake up",
+          "Target": "Dark Bedroom"
+        }
+      ]
+    },
+
+    "Dark Bedroom": {
+      "Body": "You wake all at once. The room is dark now, fully dark, and the taste of watermelon is faint but still there.",
+      "Choices": [
+        {
+          "Text": "Walk to the balcony",
+          "Target": "Balcony at Night"
+        }
+      ]
+    },
+
+    "Balcony at Night": {
+      "Body": "You step onto the balcony and look up. At that exact moment, a long meteor crosses the sky, white and distant, like the loong from your dream.",
+      "Choices": []
+    }
+  }
+}
