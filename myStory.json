@@ -14,33 +14,38 @@
     },
 
     "On the White Loong": {
-      "SceneType": "LoongLocation",
-      "Mechanism": "LoongFlight",
-      "Body": "You are holding onto a white loong as it glides through the air with impossible smoothness. Below you, lakes lie scattered across mountains, plains, reeds, and falling water.",
-      "Choices": [
-        {
-          "Text": "Descend toward the mountain lake",
-          "Target": "Mountain Lake"
-        },
-        {
-          "Text": "Descend toward the waterfall lake",
-          "Target": "Waterfall Lake"
-        },
-        {
-          "Text": "Descend toward the plain lake",
-          "Target": "Plain Lake"
-        },
-        {
-          "Text": "Descend toward the reed lake",
-          "Target": "Reed Lake"
-        },
-        {
-          "Text": "Return to the loong's back and let it surge toward the sky",
-          "Target": "Skyward Rush",
-          "Requires": ["large", "thin", "round", "tiny"]
-        }
-      ]
+  "SceneType": "LoongLocation",
+  "Mechanism": "LoongFlight",
+  "Carousel": true,
+  "Body": "You are holding onto a white loong as it glides through the air with impossible smoothness. Below you, lakes lie scattered across mountains, plains, reeds, and falling water.",
+  "Choices": [
+    {
+      "Text": "Descend toward the mountain lake",
+      "Target": "Mountain Lake",
+      "CarouselChoice": true
     },
+    {
+      "Text": "Descend toward the waterfall lake",
+      "Target": "Waterfall Lake",
+      "CarouselChoice": true
+    },
+    {
+      "Text": "Descend toward the plain lake",
+      "Target": "Plain Lake",
+      "CarouselChoice": true
+    },
+    {
+      "Text": "Descend toward the reed lake",
+      "Target": "Reed Lake",
+      "CarouselChoice": true
+    },
+    {
+      "Text": "Return to the loong's back and let it surge toward the sky",
+      "Target": "Skyward Rush",
+      "Requires": ["large", "thin", "round", "tiny"]
+    }
+  ]
+},
 
     "Mountain Lake": {
       "Body": "Far below the mountain, a dark lake rests in a bowl of stone. A large watermelon seed drifts on the surface like a tiny boat.",

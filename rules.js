@@ -127,6 +127,33 @@ class LoongLocation extends Location {
             this.engine.show("The loong seems to know you have found every kind of seed.");
         }
     }
+
+    handleChoice(choice) {
+        if (choice) {
+            this.engine.show("> " + choice.Text);
+
+            if (this.locationData.Carousel && choice.CarouselChoice) {
+                let carouselChoices = this.locationData.Choices.filter(c => c.CarouselChoice);
+                let randomChoice = carouselChoices[Math.floor(Math.random() * carouselChoices.length)];
+
+                this.engine.show("The loong shifts in the air and carries you somewhere unexpected.");
+
+                this.engine.gotoScene(
+                    getSceneClass(this.engine, randomChoice.Target),
+                    randomChoice.Target
+                );
+                return;
+            }
+
+            this.engine.gotoScene(
+                getSceneClass(this.engine, choice.Target),
+                choice.Target
+            );
+        } 
+        else {
+            this.engine.gotoScene(End);
+        }
+    }
 }
 
 class End extends Scene {
