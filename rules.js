@@ -12,12 +12,43 @@ function getSceneClass(engine, key) {
     return Location;
 }
 
-function hasRequiredSeeds(engine, requiredSeeds) {
-    if (!requiredSeeds || requiredSeeds.length === 0) {
+class GameWorldItem {
+    constructor(name, data) {
+        this.name = name;
+        this.type = data.Type;
+        this.initialLocation = data.InitialLocation;
+        this.message = data.Message || "";
+        this.requiresLantern = data.RequiresLantern || false;
+    }
+}
+
+function getAllItems(engine) {
+    let items = [];
+    let itemData = engine.storyData.Items || {};
+
+    for (let [name, data] of Object.entries(itemData)) {
+        items.push(new GameWorldItem(name, data));
+    }
+
+    return items;
+}
+
+function hasItem(engine, itemName) {
+    return engine.inventory.items.includes(itemName);
+}
+
+function addItem(engine, itemName) {
+    if (!hasItem(engine, itemName)) {
+        engine.inventory.items.push(itemName);
+    }
+}
+
+function hasRequiredItems(engine, requiredItems) {
+    if (!requiredItems || requiredItems.length === 0) {
         return true;
     }
 
-    return requiredSeeds.every(seed => engine.inventory.seeds.includes(seed));
+    return requiredItems.every(item => hasItem(engine, item));
 }
 
 class Start extends Scene {
@@ -29,8 +60,7 @@ class Start extends Scene {
 
     handleChoice() {
         this.engine.inventory = {
-            seeds: [],
-            lantern: false
+            items: []
         };
 
         this.engine.gotoScene(
@@ -47,38 +77,40 @@ class Location extends Scene {
 
         this.engine.setTitle(key);
         this.showBody();
-        this.handleLantern();
-        this.handleSeedCollection();
+        this.collectItemsHere();
         this.showInventory();
         this.showChoices();
     }
 
     showBody() {
-        if (this.locationData.NeedsLantern && !this.engine.inventory.lantern) {
+        if (this.locationData.Dark && !hasItem(this.engine, "sky lantern")) {
             this.engine.show(this.locationData.DarkBody || "It is too dark to see.");
-        } 
-        else {
+        } else {
             this.engine.show(this.locationData.Body);
         }
     }
 
-    handleLantern() {
-        if (this.locationData.GivesLantern && !this.engine.inventory.lantern) {
-            this.engine.inventory.lantern = true;
-            this.engine.show("A sky lantern rises from the mist and begins to drift beside you.");
-        }
-    }
+    collectItemsHere() {
+        let allItems = getAllItems(this.engine);
 
-    handleSeedCollection() {
-        if (this.locationData.NeedsLantern && !this.engine.inventory.lantern) {
-            return true;
-        }
+        for (let item of allItems) {
+            if (item.initialLocation !== this.key) {
+                continue;
+            }
 
-        let seedType = this.locationData.SeedType;
+            if (hasItem(this.engine, item.name)) {
+                continue;
+            }
 
-        if (seedType && !this.engine.inventory.seeds.includes(seedType)) {
-            this.engine.inventory.seeds.push(seedType);
-            this.engine.show("You collect the " + seedType + " watermelon seed.");
+            if (item.requiresLantern && !hasItem(this.engine, "sky lantern")) {
+                continue;
+            }
+
+            addItem(this.engine, item.name);
+
+            if (item.message) {
+                this.engine.show(item.message);
+            }
         }
     }
 
@@ -91,17 +123,16 @@ class Location extends Scene {
             "Reed Lake"
         ];
 
-        if (
-            dreamLocations.includes(this.key) &&
-            this.engine.inventory.seeds.length > 0
-        ) {
-            this.engine.show("<em>Seeds collected: " + this.engine.inventory.seeds.join(", ") + "</em>");
+        if (!dreamLocations.includes(this.key)) {
+            return;
         }
 
-        if (
-            dreamLocations.includes(this.key) &&
-            this.engine.inventory.lantern
-        ) {
+        let seedItems = this.engine.inventory.items.filter(item => item.includes("seed"));
+        if (seedItems.length > 0) {
+            this.engine.show("<em>Items collected: " + seedItems.join(", ") + "</em>");
+        }
+
+        if (hasItem(this.engine, "sky lantern")) {
             this.engine.show("<em>A sky lantern is drifting beside you.</em>");
         }
     }
@@ -123,7 +154,7 @@ class Location extends Scene {
         let availableChoices = [];
 
         for (let choice of allChoices) {
-            if (hasRequiredSeeds(this.engine, choice.Requires)) {
+            if (hasRequiredItems(this.engine, choice.RequiresItems)) {
                 availableChoices.push(choice);
             }
         }
@@ -149,7 +180,7 @@ class LoongLocation extends Location {
     create(key) {
         super.create(key);
 
-        if (!hasRequiredSeeds(this.engine, ["large", "thin", "round", "tiny"])) {
+        if (!hasRequiredItems(this.engine, ["large seed", "thin seed", "round seed", "tiny seed"])) {
             this.engine.show("The loong keeps circling. It feels like something is still missing from the lakes below.");
         } else {
             this.engine.show("The loong seems to know you have found every kind of seed.");

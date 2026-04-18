@@ -1,4 +1,33 @@
 {
+  "Items": {
+  "large seed": {
+    "Type": "seed",
+    "InitialLocation": "Mountain Lake",
+    "Message": "You collect the large watermelon seed."
+  },
+  "thin seed": {
+    "Type": "seed",
+    "InitialLocation": "Waterfall Lake",
+    "Message": "You collect the thin watermelon seed."
+  },
+  "round seed": {
+    "Type": "seed",
+    "InitialLocation": "Plain Lake",
+    "Message": "You collect the round watermelon seed."
+  },
+  "tiny seed": {
+    "Type": "seed",
+    "InitialLocation": "Reed Lake",
+    "Message": "You collect the tiny watermelon seed.",
+    "RequiresLantern": true
+  },
+  "sky lantern": {
+    "Type": "light",
+    "InitialLocation": "Waterfall Lake",
+    "Message": "A sky lantern rises from the mist and begins to drift beside you."
+  }
+},
+
   "Title": "Where the Seeds Drift",
   "Credits": "Customized by Yiquan Wei.",
   "InitialLocation": "Bedroom in the Afternoon",
@@ -8,39 +37,49 @@
       "Choices": [
         {
           "Text": "Close your eyes",
+          "Target": "Dream Start"
+        }
+      ]
+    },
+
+    "Dream Start": {
+      "Body": "You are holding onto a white loong as it lifts slowly from the ground. Secretly, you begin to wonder whether it would make a good form of transportation. The loong is gentle with people. It drifts through the air in a way that lets you feel almost no motion at all, as if it is deliberately trying not to jolt you. Even so, you keep both arms tightly around part of its body, your face and hands pressed against the hard bristles along its back.as it glides through the air with impossible smoothness. Below you, lakes lie scattered across mountains, plains, reeds, and falling water.",
+      "Choices": [
+        {
+          "Text": "Hold it even tighter",
           "Target": "On the White Loong"
         }
       ]
     },
 
     "On the White Loong": {
-  "SceneType": "LoongLocation",
-  "Mechanism": "LoongFlight",
-  "Body": "You are holding onto a white loong as it glides through the air with impossible smoothness. Below you, lakes lie scattered across mountains, plains, reeds, and falling water.",
-  "Choices": [
-    {
-      "Text": "Descend toward the reed lake",
-      "Target": "Reed Lake"
+      "SceneType": "LoongLocation",
+      "Mechanism": "LoongFlight",
+      "Body": "You keep holding the white loong as it glides through the air with impossible smoothness. Below you, lakes lie scattered across mountains, plains, reeds, and falling water.",
+      "Choices": [
+        {
+          "Text": "Descend toward the reed lake",
+          "Target": "Reed Lake"
+        },
+        {
+          "Text": "Descend toward the mountain lake",
+          "Target": "Mountain Lake"
+        },
+        {
+          "Text": "Descend toward the waterfall lake",
+          "Target": "Waterfall Lake"
+        },
+        {
+          "Text": "Descend toward the plain lake",
+          "Target": "Plain Lake"
+        },
+        {
+          "Text": "Return to the white loong",
+          "Target": "Skyward Rush",
+          "RequiresItems": ["large seed", "thin seed", "round seed", "tiny seed"]
+        }
+      ]
     },
-    {
-      "Text": "Descend toward the mountain lake",
-      "Target": "Mountain Lake"
-    },
-    {
-      "Text": "Descend toward the waterfall lake",
-      "Target": "Waterfall Lake"
-    },
-    {
-      "Text": "Descend toward the plain lake",
-      "Target": "Plain Lake"
-    },
-    {
-      "Text": "Return to the white loong",
-      "Target": "Skyward Rush",
-      "Requires": ["large", "thin", "round", "tiny"]
-    }
-  ]
-},
 
     "Mountain Lake": {
       "Body": "Far below the mountain, a dark lake rests in a bowl of stone. A large watermelon seed drifts on the surface like a tiny boat.",
@@ -78,9 +117,8 @@
 
     "Reed Lake": {
       "Body": "Among the reeds, the lake looks almost hidden. A tiny watermelon seed catches in the shadows between two stalks.",
+      "Dark": true,
       "DarkBody": "The reeds are too dense and the water is too dark. You cannot see what is drifting there.",
-      "SeedType": "tiny",
-      "NeedsLantern": true,
       "Choices": [
         {
           "Text": "Return to the white loong",
