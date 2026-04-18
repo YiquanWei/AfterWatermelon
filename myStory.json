@@ -74,6 +74,10 @@
           "Target": "Plain Lake"
         },
         {
+          "Text": "Stop trying to direct the loong",
+          "Target": "At the Loong's Whim"
+        },
+        {
           "Text": "Return to the white loong",
           "Target": "Skyward Rush",
           "RequiresItems": ["large seed", "thin seed", "round seed", "tiny seed"]
@@ -133,6 +137,30 @@
         {
           "Text": "Wake up",
           "Target": "Dark Bedroom"
+        }
+      ]
+    },
+
+    "At the Loong's Whim": {
+      "SceneType": "CarouselLocation",
+      "Mechanism": "LoongMoodCarousel",
+      "Carousel": true,
+      "Body": "You loosen your grip and stop trying to direct it. The loong seems pleased by that. It circles once, as if deciding which part of the dream deserves you next.",
+      "Choices": [
+        {
+          "Text": "Point vaguely downward",
+          "Target": "Mountain Lake",
+          "CarouselChoice": true
+        },
+        {
+          "Text": "Say nothing and wait",
+          "Target": "Plain Lake",
+          "CarouselChoice": true
+        },
+        {
+          "Text": "Trust the loong completely",
+          "Target": "Reed Lake",
+          "CarouselChoice": true
         }
       ]
     },
