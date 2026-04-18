@@ -29,7 +29,8 @@ class Start extends Scene {
 
     handleChoice() {
         this.engine.inventory = {
-            seeds: []
+            seeds: [],
+            lantern: false
         };
 
         this.engine.gotoScene(
@@ -45,14 +46,34 @@ class Location extends Scene {
         this.locationData = getLocationData(this.engine, key);
 
         this.engine.setTitle(key);
-        this.engine.show(this.locationData.Body);
-
+        this.showBody();
+        this.handleLantern();
         this.handleSeedCollection();
         this.showInventory();
         this.showChoices();
     }
 
+    showBody() {
+        if (this.locationData.NeedsLantern && !this.engine.inventory.lantern) {
+            this.engine.show(this.locationData.DarkBody || "It is too dark to see.");
+        } 
+        else {
+            this.engine.show(this.locationData.Body);
+        }
+    }
+
+    handleLantern() {
+        if (this.locationData.GivesLantern && !this.engine.inventory.lantern) {
+            this.engine.inventory.lantern = true;
+            this.engine.show("A sky lantern rises from the mist and begins to drift beside you.");
+        }
+    }
+
     handleSeedCollection() {
+        if (this.locationData.NeedsLantern && !this.engine.inventory.lantern) {
+            return true;
+        }
+
         let seedType = this.locationData.SeedType;
 
         if (seedType && !this.engine.inventory.seeds.includes(seedType)) {
@@ -62,21 +83,28 @@ class Location extends Scene {
     }
 
     showInventory() {
-    let dreamLocations = [
-        "On the White Loong",
-        "Mountain Lake",
-        "Waterfall Lake",
-        "Plain Lake",
-        "Reed Lake"
-    ];
+        let dreamLocations = [
+            "On the White Loong",
+            "Mountain Lake",
+            "Waterfall Lake",
+            "Plain Lake",
+            "Reed Lake"
+        ];
 
-    if (
-        dreamLocations.includes(this.key) &&
-        this.engine.inventory.seeds.length > 0
-    ) {
-        this.engine.show("<em>Seeds collected: " + this.engine.inventory.seeds.join(", ") + "</em>");
+        if (
+            dreamLocations.includes(this.key) &&
+            this.engine.inventory.seeds.length > 0
+        ) {
+            this.engine.show("<em>Seeds collected: " + this.engine.inventory.seeds.join(", ") + "</em>");
+        }
+
+        if (
+            dreamLocations.includes(this.key) &&
+            this.engine.inventory.lantern
+        ) {
+            this.engine.show("<em>A sky lantern is drifting beside you.</em>");
+        }
     }
-}
 
     showChoices() {
         let availableChoices = this.getAvailableChoices();
@@ -125,33 +153,6 @@ class LoongLocation extends Location {
             this.engine.show("The loong keeps circling. It feels like something is still missing from the lakes below.");
         } else {
             this.engine.show("The loong seems to know you have found every kind of seed.");
-        }
-    }
-
-    handleChoice(choice) {
-        if (choice) {
-            this.engine.show("> " + choice.Text);
-
-            if (this.locationData.Carousel && choice.CarouselChoice) {
-                let carouselChoices = this.locationData.Choices.filter(c => c.CarouselChoice);
-                let randomChoice = carouselChoices[Math.floor(Math.random() * carouselChoices.length)];
-
-                this.engine.show("The loong shifts in the air and carries you somewhere unexpected.");
-
-                this.engine.gotoScene(
-                    getSceneClass(this.engine, randomChoice.Target),
-                    randomChoice.Target
-                );
-                return;
-            }
-
-            this.engine.gotoScene(
-                getSceneClass(this.engine, choice.Target),
-                choice.Target
-            );
-        } 
-        else {
-            this.engine.gotoScene(End);
         }
     }
 }

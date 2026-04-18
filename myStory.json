@@ -16,31 +16,26 @@
     "On the White Loong": {
   "SceneType": "LoongLocation",
   "Mechanism": "LoongFlight",
-  "Carousel": true,
   "Body": "You are holding onto a white loong as it glides through the air with impossible smoothness. Below you, lakes lie scattered across mountains, plains, reeds, and falling water.",
   "Choices": [
     {
+      "Text": "Descend toward the reed lake",
+      "Target": "Reed Lake"
+    },
+    {
       "Text": "Descend toward the mountain lake",
-      "Target": "Mountain Lake",
-      "CarouselChoice": true
+      "Target": "Mountain Lake"
     },
     {
       "Text": "Descend toward the waterfall lake",
-      "Target": "Waterfall Lake",
-      "CarouselChoice": true
+      "Target": "Waterfall Lake"
     },
     {
       "Text": "Descend toward the plain lake",
-      "Target": "Plain Lake",
-      "CarouselChoice": true
+      "Target": "Plain Lake"
     },
     {
-      "Text": "Descend toward the reed lake",
-      "Target": "Reed Lake",
-      "CarouselChoice": true
-    },
-    {
-      "Text": "Return to the loong's back and let it surge toward the sky",
+      "Text": "Return to the white loong",
       "Target": "Skyward Rush",
       "Requires": ["large", "thin", "round", "tiny"]
     }
@@ -61,6 +56,7 @@
     "Waterfall Lake": {
       "Body": "Mist gathers where the waterfall strikes the lake. A thin watermelon seed spins in a slow circle near the foam.",
       "SeedType": "thin",
+      "GivesLantern": true,
       "Choices": [
         {
           "Text": "Return to the white loong",
@@ -82,7 +78,9 @@
 
     "Reed Lake": {
       "Body": "Among the reeds, the lake looks almost hidden. A tiny watermelon seed catches in the shadows between two stalks.",
+      "DarkBody": "The reeds are too dense and the water is too dark. You cannot see what is drifting there.",
       "SeedType": "tiny",
+      "NeedsLantern": true,
       "Choices": [
         {
           "Text": "Return to the white loong",
